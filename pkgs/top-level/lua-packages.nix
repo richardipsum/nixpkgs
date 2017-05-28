@@ -5,7 +5,7 @@
    for each package in a separate file: the call to the function would
    be almost as must code as the function itself. */
 
-{ fetchurl, fetchzip, stdenv, lua, callPackage, unzip, zziplib, pkgconfig, libtool
+{ which, fetchurl, fetchzip, stdenv, lua, callPackage, unzip, zziplib, pkgconfig, libtool
 , pcre, oniguruma, gnulib, tre, glibc, sqlite, openssl, expat, cairo
 , perl, gtk2, python, glib, gobjectIntrospection, libevent, zlib, autoreconfHook
 , fetchFromGitHub, libmpack
@@ -192,20 +192,25 @@ let
   luxio = buildLuaPackage rec {
     name = "luxio-${version}";
     version = "12";
-    src = fetchurl {
-      url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    };
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = /home/nix/luxio;
+    buildInputs = [ which pkgconfig ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
-      license = stdenv.lib.licenses.expat;
+      license = stdenv.lib.licenses.mit;
     };
     preBuild = ''
       makeFlagsArray=(
         INST_LIBDIR="$out/lib/lua/${lua.luaversion}"
         INST_LUADIR="$out/share/lua/${lua.luaversion}"
-        LUA_BINDIR="${lua}/bin"
-        LUA_INCDIR="-I${lua}/include"
-        LUA_LIBDIR="-L${lua}/lib"
+        #LUA_BINDIR="$out/bin/lua/${lua.luaversion}"
+        LUA_BINDIR="$out/bin"
+        #LUA_BINDIR="${lua}/bin"
+        #LUA_INCDIR="-I${lua}/include"
+        #LUA_LIBDIR="-L${lua}/lib"
         );
     '';
   };
