@@ -8,7 +8,7 @@
 { which, fetchurl, fetchzip, stdenv, lua, callPackage, unzip, zziplib, pkgconfig, libtool
 , pcre, oniguruma, gnulib, tre, glibc, sqlite, openssl, expat, cairo
 , perl, gtk2, python, glib, gobjectIntrospection, libevent, zlib, autoreconfHook
-, fetchFromGitHub, libmpack
+, fetchFromGitHub, libmpack, libscrypt
 }:
 
 let
@@ -223,7 +223,7 @@ let
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/lua-scrypt;
-    buildInputs = [ which pkgconfig ];
+    buildInputs = [ which pkgconfig libscrypt ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
