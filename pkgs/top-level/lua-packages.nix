@@ -215,9 +215,59 @@ let
     '';
   };
 
+  clod = buildLuaPackage rec {
+    name = "clod-${version}";
+    version = "1.1";
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = /home/richardipsum/projects/contrib/clod;
+    buildInputs = [ which pkgconfig libscrypt ];
+    meta = {
+      platforms = stdenv.lib.platforms.unix;
+      license = stdenv.lib.licenses.mit;
+    };
+
+    buildPhase = ''
+        echo hi!
+    '';
+
+    preInstall = ''
+      makeFlagsArray=(
+        INST_ROOT="$out/share/lua/${lua.luaversion}"
+      );
+    '';
+  };
+
+  gall = buildLuaPackage rec {
+    name = "gall-${version}";
+    version = "1.1";
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = /home/richardipsum/projects/contrib/gall;
+    buildInputs = [ which pkgconfig ];
+    meta = {
+      platforms = stdenv.lib.platforms.unix;
+      license = stdenv.lib.licenses.mit;
+    };
+
+    buildPhase = ''
+        echo hi!
+    '';
+
+    preInstall = ''
+      makeFlagsArray=(
+        INST_ROOT="$out/share/lua/${lua.luaversion}"
+      );
+    '';
+  };
+
   luascrypt = buildLuaPackage rec {
-    name = "luxio-${version}";
-    version = "12";
+    name = "luascrypt-${version}";
+    version = "1.1";
     #src = fetchurl {
     #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
