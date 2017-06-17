@@ -265,6 +265,57 @@ let
     '';
   };
 
+  supple = buildLuaPackage rec {
+    name = "supple-${version}";
+    version = "1.1";
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = /home/richardipsum/projects/contrib/supple;
+    buildInputs = [ which pkgconfig ];
+    meta = {
+      platforms = stdenv.lib.platforms.unix;
+      license = stdenv.lib.licenses.mit;
+    };
+
+    buildPhase = ''
+        echo hi!
+    '';
+
+    preInstall = ''
+      makeFlagsArray=(
+        INST_BASE="$out"
+        LUA_VER=${lua.luaversion}
+      );
+    '';
+  };
+
+  luaiconv = buildLuaPackage rec {
+    name = "luaiconv-${version}";
+    version = "1.1";
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = fetchurl {
+       url = "https://github.com/downloads/ittner/lua-iconv/lua-iconv-7.tar.gz";
+       sha256 = "02dg5x79fg5mwsycr0fj6w04zykdpiki9xjswkkwzdalqwaikny1";
+    };
+
+    buildInputs = [ pkgconfig ];
+    meta = {
+      platforms = stdenv.lib.platforms.unix;
+      license = stdenv.lib.licenses.mit;
+    };
+    preBuild = ''
+      makeFlagsArray=(
+        INSTALL_PATH="$out/lib/lua/${lua.luaversion}"
+        );
+    '';
+  };
+
+
   luascrypt = buildLuaPackage rec {
     name = "luascrypt-${version}";
     version = "1.1";
