@@ -291,6 +291,34 @@ let
     '';
   };
 
+  gitano = buildLuaPackage rec {
+    name = "gitano-${version}";
+    version = "1.1";
+    #src = fetchurl {
+    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
+    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
+    #};
+    src = /home/richardipsum/projects/contrib/gitano;
+    buildInputs = [ which pkgconfig supple luxio gall lace clod ];
+    meta = {
+      platforms = stdenv.lib.platforms.unix;
+      license = stdenv.lib.licenses.mit;
+    };
+
+    buildPhase = ''
+        echo hi!
+    '';
+
+    preInstall = ''
+      makeFlagsArray=(
+        SYSCONF_DIR="$out/etc"
+        INST_ROOT="$out"
+        LUA_VER=${lua.luaversion}
+      );
+    '';
+  };
+
+
   lace = buildLuaPackage rec {
     name = "lace-${version}";
     version = "1.1";
