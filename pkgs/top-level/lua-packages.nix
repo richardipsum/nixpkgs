@@ -8,7 +8,7 @@
 { which, fetchurl, fetchzip, stdenv, lua, callPackage, unzip, zziplib, pkgconfig, libtool
 , pcre, oniguruma, gnulib, tre, glibc, sqlite, openssl, expat, cairo
 , perl, gtk2, python, glib, gobjectIntrospection, libevent, zlib, autoreconfHook
-, fetchFromGitHub, libmpack, libscrypt
+, fetchFromGitHub, libmpack, libscrypt, makeWrapper
 }:
 
 let
@@ -223,7 +223,7 @@ let
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/clod;
-    buildInputs = [ which pkgconfig libscrypt ];
+    buildInputs = [ which pkgconfig ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -299,22 +299,37 @@ let
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/gitano;
-    buildInputs = [ which pkgconfig supple luxio gall lace clod ];
+    buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv ];
+    propagatedBuildInputs = [ libscrypt lua ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
     };
 
-    buildPhase = ''
-        echo hi!
-    '';
-
-    preInstall = ''
+    preBuild = ''
       makeFlagsArray=(
         SYSCONF_DIR="$out/etc"
         INST_ROOT="$out"
+        SHARE_INST_PATH="$out/share/lua/${lua.luaversion}"
+        LIB_BIN_INST_PATH="$out/lib/lua/${lua.luaversion}"
         LUA_VER=${lua.luaversion}
+        LUA="${lua}/bin/lua"
+        LUAC="${lua}/bin/luac"
       );
+    '';
+
+    postInstall = ''
+      wrapProgram "$out/bin/gitano-setup" \
+        --set LUA_PATH '${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua ])
+          }' \
+        --set LUA_CPATH '${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua ])
+          }'
+
+      patchShebangs $out
     '';
   };
 
@@ -353,7 +368,8 @@ let
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/tongue;
-    buildInputs = [ which pkgconfig luaiconv ];
+    propagatedBuildInputs = [ luaiconv ];
+    buildInputs = [ which pkgconfig ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -395,16 +411,16 @@ let
     '';
   };
 
-
   luascrypt = buildLuaPackage rec {
     name = "luascrypt-${version}";
-    version = "1.1";
+    version = "1.1.4";
     #src = fetchurl {
     #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/lua-scrypt;
-    buildInputs = [ which pkgconfig libscrypt ];
+    buildInputs = [ which pkgconfig libscrypt lua ];
+    propagatedBuildInputs = [ libscrypt lua ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -416,10 +432,11 @@ let
         #LUA_BINDIR="$out/bin/lua/${lua.luaversion}"
         LUA_BINDIR="$out/bin"
         #LUA_BINDIR="${lua}/bin"
-        #LUA_INCDIR="-I${lua}/include"
-        #LUA_LIBDIR="-L${lua}/lib"
+        LUA_INCDIR="-I${lua}/include"
+        LUA_LIBDIR="-L${lua}/lib"
         );
     '';
+
   };
 
   luasec = buildLuaPackage rec {

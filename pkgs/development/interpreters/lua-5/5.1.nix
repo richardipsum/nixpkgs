@@ -40,7 +40,9 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/share/doc/lua" "$out/lib/pkgconfig"
     sed <"etc/lua.pc" >"$out/lib/pkgconfig/lua.pc" -e "s|^prefix=.*|prefix=$out|"
     mv "doc/"*.{gif,png,css,html} "$out/share/doc/lua/"
-    rmdir $out/{share,lib}/lua/5.1 $out/{share,lib}/lua
+    ln -sv liblua.so.5.1 "$out/lib/liblua5.1.so.0"
+    ln -sv liblua.so.5.1 "$out/lib/lua/5.1/liblua5.1.so.0"
+    #rmdir $out/{share,lib}/5.1 $out/{share,lib}/lua
   '';
 
   meta = {
