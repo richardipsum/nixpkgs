@@ -299,7 +299,7 @@ let
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/gitano;
-    buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv ];
+    buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv luastdlib lrexlib ];
     propagatedBuildInputs = [ libscrypt lua ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
@@ -322,7 +322,7 @@ let
       wrapProgram "$out/bin/gitano-setup" \
         --set LUA_PATH '${
           stdenv.lib.concatStringsSep ";"
-            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua ])
+            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace ])
           }' \
         --set LUA_CPATH '${
           stdenv.lib.concatStringsSep ";"

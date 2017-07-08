@@ -14321,6 +14321,10 @@ with pkgs;
 
   hello = callPackage ../applications/misc/hello { };
 
+  linkedlist = callPackage ../applications/misc/linkedlist { };
+
+  simputils = callPackage ../applications/misc/simputils { };
+
   kubernetes-helm = callPackage ../applications/networking/cluster/helm { };
 
   helmholtz = callPackage ../applications/audio/pd-plugins/helmholtz { };
