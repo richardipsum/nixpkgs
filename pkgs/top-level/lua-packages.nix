@@ -217,7 +217,7 @@ let
       url = "https://git.gitano.org.uk/clod.git/snapshot/clod-1.0.2.tar.bz2";
       sha256 = "1khinsjvasgmilx6g9zsaca1n5aqamfrjvg6p32kiznrqjxwl212";
     };
-    buildInputs = [ which pkgconfig ];
+    buildInputs = [];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -300,10 +300,6 @@ let
   gitano = buildLuaPackage rec {
     name = "gitano-${version}";
     version = "1.1";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
     src = /home/richardipsum/projects/contrib/gitano;
     buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv luastdlib lrexlib ];
     propagatedBuildInputs = [ lrexlib libscrypt supple lua ];
