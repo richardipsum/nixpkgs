@@ -426,8 +426,8 @@ let
       url = "https://git.gitano.org.uk/lua-scrypt.git/snapshot/lua-scrypt-da07e198989c08f28f63c24fd56742bafd5ed275.tar.bz2";
       sha256 = "01h86k1lkap1976gh97vf8kha8x8nk2mnqw593sq63x73ijh7hr2";
     };
-    buildInputs = [ which pkgconfig libscrypt lua ];
-    propagatedBuildInputs = [ libscrypt lua ];
+    buildInputs = [ which pkgconfig libscrypt ];
+    propagatedBuildInputs = [ libscrypt ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
