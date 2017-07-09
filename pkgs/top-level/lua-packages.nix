@@ -261,13 +261,11 @@ let
   supple = buildLuaPackage rec {
     name = "supple-${version}";
     version = "1.2";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
-    src = /home/richardipsum/projects/contrib/supple;
-    propagatedBuildInputs = [ luxio ];
-    buildInputs = [ which pkgconfig luxio makeWrapper ];
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/personal/richardipsum/supple.git/snapshot/supple-4de01f553eb88c88600946a4b52bb9f9628ff048.tar.bz2";
+      sha256 = "0m2yi8n8kgrrzxnhk0zy47iqqi5s3whpa3n8af9w7c69805067vl";
+    };
+    buildInputs = [ makeWrapper ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
