@@ -357,11 +357,10 @@ let
   lace = buildLuaPackage rec {
     name = "lace-${version}";
     version = "1.1";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
-    src = /home/richardipsum/projects/contrib/lace;
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/lace.git/snapshot/lace-1.3.1.tar.bz2";
+      sha256 = "0z3mgj148v566ki32mpig1fmlf1pcrha99qm3j6zx0xj71bdyxvl";
+    };
     buildInputs = [ which pkgconfig ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
@@ -369,7 +368,7 @@ let
     };
 
     buildPhase = ''
-        echo hi!
+        echo No build required, skipping!
     '';
 
     preInstall = ''
