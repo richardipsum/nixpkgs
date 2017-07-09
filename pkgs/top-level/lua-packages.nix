@@ -355,7 +355,7 @@ let
       url = "https://git.gitano.org.uk/lace.git/snapshot/lace-1.3.1.tar.bz2";
       sha256 = "0z3mgj148v566ki32mpig1fmlf1pcrha99qm3j6zx0xj71bdyxvl";
     };
-    buildInputs = [ which pkgconfig ];
+    buildInputs = [];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -381,7 +381,7 @@ let
       sha256 = "0rjwfkxhwnhfd0qlz7w7bbjxz0z0m4nmjh2lygwgwh9gmkdzv5k9";
     };
     propagatedBuildInputs = [ luaiconv ];
-    buildInputs = [ which pkgconfig ];
+    buildInputs = [];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
