@@ -267,20 +267,40 @@ let
 
   supple = buildLuaPackage rec {
     name = "supple-${version}";
-    version = "1.1";
+    version = "1.2";
     #src = fetchurl {
     #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
     #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
     #};
     src = /home/richardipsum/projects/contrib/supple;
-    buildInputs = [ which pkgconfig ];
+    propagatedBuildInputs = [ luxio ];
+    buildInputs = [ which pkgconfig luxio makeWrapper ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
     };
 
-    buildPhase = ''
-        echo hi!
+    preBuild = ''
+      makeFlagsArray=(
+        #INST_LIBDIR="$out/lib/lua/${lua.luaversion}"
+        #INST_LUADIR="$out/share/lua/${lua.luaversion}"
+        #LUA_BINDIR="$out/bin/lua/${lua.luaversion}"
+        #LUA_BINDIR="$out/bin"
+        INST_BASE="$out"
+        LFLAGS="-L$out/lib/lua/${lua.luaversion}"
+        INCS="-I${lua}/include"
+        LIB_LUA="-llua"
+        BAKE_SUPPLE_PATHS=1
+        SUPPLE_LUA_PATH="$out/share/lua/${lua.luaversion}/?.lua;${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaPath [ luxio ])
+          }"
+        SUPPLE_LUA_CPATH="$out/lib/lua/${lua.luaversion}/?.so;${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaCPath [ luxio ])
+          }"
+        #LUA_VER=""
+        );
     '';
 
     preInstall = ''
@@ -289,6 +309,13 @@ let
         LUA_VER=${lua.luaversion}
       );
     '';
+
+    #postInstall = ''
+    #  wrapProgram "$out/lib/supple-sandbox${lua.luaversion}" \
+    #    --set LUA_PATH "$out/share/lua/${lua.luaversion}/?.lua" \
+    #    --set LUA_CPATH "$out/lib/lua/${lua.luaversion}"
+    #'';
+
   };
 
   gitano = buildLuaPackage rec {
@@ -300,7 +327,7 @@ let
     #};
     src = /home/richardipsum/projects/contrib/gitano;
     buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv luastdlib lrexlib ];
-    propagatedBuildInputs = [ libscrypt lua ];
+    propagatedBuildInputs = [ lrexlib libscrypt supple lua ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
@@ -310,8 +337,8 @@ let
       makeFlagsArray=(
         SYSCONF_DIR="$out/etc"
         INST_ROOT="$out"
-        SHARE_INST_PATH="$out/share/lua/${lua.luaversion}"
-        LIB_BIN_INST_PATH="$out/lib/lua/${lua.luaversion}"
+        SHARE_INST_PATH="$out/share/gitano"
+        LIB_BIN_INST_PATH="$out/lib/gitano/bin"
         LUA_VER=${lua.luaversion}
         LUA="${lua}/bin/lua"
         LUAC="${lua}/bin/luac"
@@ -322,11 +349,21 @@ let
       wrapProgram "$out/bin/gitano-setup" \
         --set LUA_PATH '${
           stdenv.lib.concatStringsSep ";"
-            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace ])
+            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace clod supple ])
           }' \
         --set LUA_CPATH '${
           stdenv.lib.concatStringsSep ";"
-            (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua ])
+            (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua lrexlib supple ])
+          }'
+
+      wrapProgram "$out/lib/gitano/bin/gitano-auth" \
+        --set LUA_PATH '${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace clod supple ])
+          }' \
+        --set LUA_CPATH '${
+          stdenv.lib.concatStringsSep ";"
+            (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua lrexlib supple ])
           }'
 
       patchShebangs $out
