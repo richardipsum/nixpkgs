@@ -299,8 +299,12 @@ let
 
   gitano = buildLuaPackage rec {
     name = "gitano-${version}";
-    version = "1.1";
-    src = /home/richardipsum/projects/contrib/gitano;
+    version = "1.0";
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/personal/richardipsum/gitano.git/snapshot/gitano-574fca4502ad46b427a1c8dbf8ab34b90bc66f56.tar.bz2";
+      sha256 = "1dss73mq436hkydd0wpj7xrb3drcpilb81g4s5rcfwnjgsa835gv";
+    };
+
     buildInputs = [ makeWrapper ];
     propagatedBuildInputs = [ lrexlib libscrypt supple lua ];
     meta = {
