@@ -356,7 +356,7 @@ let
 
   lace = buildLuaPackage rec {
     name = "lace-${version}";
-    version = "1.1";
+    version = "1.3.1";
     src = fetchurl {
       url = "https://git.gitano.org.uk/lace.git/snapshot/lace-1.3.1.tar.bz2";
       sha256 = "0z3mgj148v566ki32mpig1fmlf1pcrha99qm3j6zx0xj71bdyxvl";
@@ -381,12 +381,11 @@ let
 
   tongue = buildLuaPackage rec {
     name = "tongue-${version}";
-    version = "1.1";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
-    src = /home/richardipsum/projects/contrib/tongue;
+    version = "0.8";
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/tongue.git/snapshot/tongue-0.8.tar.bz2";
+      sha256 = "0rjwfkxhwnhfd0qlz7w7bbjxz0z0m4nmjh2lygwgwh9gmkdzv5k9";
+    };
     propagatedBuildInputs = [ luaiconv ];
     buildInputs = [ which pkgconfig ];
     meta = {
@@ -395,7 +394,7 @@ let
     };
 
     buildPhase = ''
-        echo hi!
+        echo No build required, skipping!
     '';
 
     preInstall = ''
