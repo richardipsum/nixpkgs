@@ -427,12 +427,11 @@ let
 
   luascrypt = buildLuaPackage rec {
     name = "luascrypt-${version}";
-    version = "1.1.4";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
-    src = /home/richardipsum/projects/contrib/lua-scrypt;
+    version = "1.1";
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/lua-scrypt.git/snapshot/lua-scrypt-da07e198989c08f28f63c24fd56742bafd5ed275.tar.bz2";
+      sha256 = "01h86k1lkap1976gh97vf8kha8x8nk2mnqw593sq63x73ijh7hr2";
+    };
     buildInputs = [ which pkgconfig libscrypt lua ];
     propagatedBuildInputs = [ libscrypt lua ];
     meta = {
@@ -443,12 +442,10 @@ let
       makeFlagsArray=(
         INST_LIBDIR="$out/lib/lua/${lua.luaversion}"
         INST_LUADIR="$out/share/lua/${lua.luaversion}"
-        #LUA_BINDIR="$out/bin/lua/${lua.luaversion}"
         LUA_BINDIR="$out/bin"
-        #LUA_BINDIR="${lua}/bin"
         LUA_INCDIR="-I${lua}/include"
         LUA_LIBDIR="-L${lua}/lib"
-        );
+      );
     '';
 
   };
