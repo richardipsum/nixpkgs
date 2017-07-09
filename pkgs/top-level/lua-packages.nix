@@ -356,15 +356,17 @@ let
             (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua lrexlib supple ])
           }'
 
-      wrapProgram "$out/lib/gitano/bin/gitano-auth" \
-        --set LUA_PATH '${
-          stdenv.lib.concatStringsSep ";"
-            (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace clod supple ])
-          }' \
-        --set LUA_CPATH '${
-          stdenv.lib.concatStringsSep ";"
-            (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua lrexlib supple ])
-          }'
+      for f in $out/lib/gitano/bin/*; do
+        wrapProgram "$f" \
+          --set LUA_PATH '${
+            stdenv.lib.concatStringsSep ";"
+              (map getLuaPath [ gall luxio tongue luaiconv luascrypt lua lace clod supple ])
+            }' \
+          --set LUA_CPATH '${
+            stdenv.lib.concatStringsSep ";"
+              (map getLuaCPath [ gall luxio tongue luaiconv luascrypt lua lrexlib supple ])
+            }'
+      done
 
       patchShebangs $out
     '';
