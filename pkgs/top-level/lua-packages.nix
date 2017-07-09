@@ -241,7 +241,7 @@ let
       url = "https://git.gitano.org.uk/gall.git/snapshot/gall-1.2.tar.bz2";
       sha256 = "1kdrwq4275sfdjf0p266w6y330p0bk20k35b24pmqkdv9z8nwzgw";
     };
-    buildInputs = [ which pkgconfig ];
+    buildInputs = [];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
