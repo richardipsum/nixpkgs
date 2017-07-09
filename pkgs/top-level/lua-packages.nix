@@ -236,12 +236,11 @@ let
 
   gall = buildLuaPackage rec {
     name = "gall-${version}";
-    version = "1.1";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
-    src = /home/richardipsum/projects/contrib/gall;
+    version = "1.2";
+    src = fetchurl {
+      url = "https://git.gitano.org.uk/gall.git/snapshot/gall-1.2.tar.bz2";
+      sha256 = "1kdrwq4275sfdjf0p266w6y330p0bk20k35b24pmqkdv9z8nwzgw";
+    };
     buildInputs = [ which pkgconfig ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
@@ -249,7 +248,7 @@ let
     };
 
     buildPhase = ''
-        echo hi!
+        echo No build required, skipping!
     '';
 
     preInstall = ''
