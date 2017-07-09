@@ -407,7 +407,7 @@ let
        sha256 = "02dg5x79fg5mwsycr0fj6w04zykdpiki9xjswkkwzdalqwaikny1";
     };
 
-    buildInputs = [ pkgconfig ];
+    buildInputs = [];
     meta = {
       platforms = stdenv.lib.platforms.unix;
       license = stdenv.lib.licenses.mit;
