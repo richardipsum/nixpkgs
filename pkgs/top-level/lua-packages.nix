@@ -275,10 +275,6 @@ let
 
     preBuild = ''
       makeFlagsArray=(
-        #INST_LIBDIR="$out/lib/lua/${lua.luaversion}"
-        #INST_LUADIR="$out/share/lua/${lua.luaversion}"
-        #LUA_BINDIR="$out/bin/lua/${lua.luaversion}"
-        #LUA_BINDIR="$out/bin"
         INST_BASE="$out"
         LFLAGS="-L$out/lib/lua/${lua.luaversion}"
         INCS="-I${lua}/include"
@@ -292,7 +288,6 @@ let
           stdenv.lib.concatStringsSep ";"
             (map getLuaCPath [ luxio ])
           }"
-        #LUA_VER=""
         );
     '';
 
@@ -302,13 +297,6 @@ let
         LUA_VER=${lua.luaversion}
       );
     '';
-
-    #postInstall = ''
-    #  wrapProgram "$out/lib/supple-sandbox${lua.luaversion}" \
-    #    --set LUA_PATH "$out/share/lua/${lua.luaversion}/?.lua" \
-    #    --set LUA_CPATH "$out/lib/lua/${lua.luaversion}"
-    #'';
-
   };
 
   gitano = buildLuaPackage rec {
