@@ -407,11 +407,7 @@ let
 
   luaiconv = buildLuaPackage rec {
     name = "luaiconv-${version}";
-    version = "1.1";
-    #src = fetchurl {
-    #  url = "https://git.gitano.org.uk/luxio.git/snapshot/luxio-luxio-12.tar.bz2";
-    #  sha256 = "18lykif8xi8q4n04d9dnds9ih8149hqnjxpn7hzm4hmz3l2pzyjj";
-    #};
+    version = "7";
     src = fetchurl {
        url = "https://github.com/downloads/ittner/lua-iconv/lua-iconv-7.tar.gz";
        sha256 = "02dg5x79fg5mwsycr0fj6w04zykdpiki9xjswkkwzdalqwaikny1";
@@ -425,7 +421,7 @@ let
     preBuild = ''
       makeFlagsArray=(
         INSTALL_PATH="$out/lib/lua/${lua.luaversion}"
-        );
+      );
     '';
   };
 
