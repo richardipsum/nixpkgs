@@ -301,7 +301,7 @@ let
     name = "gitano-${version}";
     version = "1.1";
     src = /home/richardipsum/projects/contrib/gitano;
-    buildInputs = [ which pkgconfig makeWrapper lua luxio tongue luaiconv luastdlib lrexlib ];
+    buildInputs = [ makeWrapper ];
     propagatedBuildInputs = [ lrexlib libscrypt supple lua ];
     meta = {
       platforms = stdenv.lib.platforms.unix;
